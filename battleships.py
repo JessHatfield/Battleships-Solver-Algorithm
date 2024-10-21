@@ -4,6 +4,8 @@ from random import randint
 from typing import Optional
 
 
+# Added this dataclass to simplify working with coordinates and to improve the readability of code/reduce chances of
+# bugs
 @dataclasses.dataclass
 class Coordinate:
     x: int
@@ -83,6 +85,9 @@ class BattleShips:
         return self.__shots
 
 
+# I chose to use a handler pattern here to implement the target selection logic
+# I reckoned it was going to be simpler to understand and extend vs a procedural approach
+# It also matched how I was thinking about the problem in my head
 class MachineTargetSelector():
 
     def __init__(self):
@@ -111,7 +116,8 @@ class MachineTargetSelector():
 
         return
 
-
+# We had a couple classes all using the same interface/doing the same thing. So I added an ABC to keep things clean
+# This also meant I could use clear/accurate type hints within my functions
 class MachineAction(ABC):
 
     def __init__(self, **kwargs):
@@ -213,16 +219,39 @@ def play_game(game: BattleShips) -> int:
     of hits was greater than the number of locations on the board!
     
     With very little time remaining I pivoted to a third approach. Replacing the random shot component with a 
-    checkerboard scan. I had to complete this after the test concluded however. 
-    
-    After about an hours experimentation it was complete.This approach reduced the average number of shots to about 
-    63 shots. Ultimately scoring 800. This implementation lives in the 'battleships_with_checkerboard_approach.py' file
+    checkerboard scan. I had to complete this after the test concluded however. Honestly I was just really eager to 
+    see if I could get it working!
 
+    After about an 1 hours experimentation it was complete.This approach reduced the average number of shots to about 
+    63 shots. Ultimately scoring 800. This implementation is in the 'battleships_with_checkerboard_approach.py' file
     """
 
+    """
+    ---- What might I change to improve the algorithm----
+    
+    1. On the Initial Attempt --> Moving to a checkerboard approach from a random shot approach
+    
+        We know that ships are at least two squares long,
+         
+        Hitting every 2nd tile means we can hit at least 1 coordinate per ship. 
+        
+        Allowing us to get a rough idea of each ship location with just 50 shots. A big improvement from 100 shots with 
+        the random approach used previously.
+         
 
+    2. After implementing the checkerboard approach -> Using the knowledge of past hits to reduce wasted shots
+    
+    The approach definitely could have benefited from memoization. 
+    
+    Hits/misses from the DirectionalShot class should have removed co-ords from the 
+    CheckerboardShotGenerator.grid_cords property. This would have reduced the size of the problem space
+    
+    Taken further we could have used knowledge about the board state to infer where ships might be.
+    
+    By grouping tiles into spaces based on ship length and then shooting the center space we could effectively 
+    eliminate x tiles per shot!
 
-    # Further improvements
+    """
 
     target_selector = MachineTargetSelector()
 
