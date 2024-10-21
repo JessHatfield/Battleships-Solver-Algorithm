@@ -187,14 +187,41 @@ def play_game(game: BattleShips) -> int:
     '''
     # TODO: Complete this function
 
-    # game logic goes here
+    """
+    
+    ----- Notes on my process ------
 
-    # compute if game has ended and return score
+    In this approach I first tried a completely random shot selection strategy to validate the game logic worked
+    
+    It was quickly obvious that this approach was not going to pass our tests as it was incredibly inefficient
+    
+    So I moved to an approach based on firing random shots until a hit occurred and then scanning the area around a hit
+   
+    If a hit was seen we would scan a cord adjacent to the hit (UP/DOWN/LEFT/RIGHT)
+    
+    If further hits where seen then we would carry on in the direction of the ship, switching direction when a miss 
+    occurred
+    
+    This allowed me to incrementally improve my algorithm with the least amount of work. The test still failed 
+    however scoring an average of 226 shots!
+    
+    At this point I had about 10 mins remaining so I added memory to the random shot strategy to try and reduce the 
+    count of wasted shots. This reduced the average to 102 shots, however this still failed the tests. 
+    
+    In hindsight I suspect the lack of boundary detection in the DirectionalShot class might explain why the number 
+    of hits was greater than the number of locations on the board!
+    
+    With very little time remaining I pivoted to a third approach. Replacing the random shot component with a 
+    checkerboard scan. I had to complete this after the test concluded however. 
+    
+    After about an hours experimentation it was complete.This approach reduced the average number of shots to about 
+    63 shots. Ultimately scoring 800. This implementation lives in the 'battleships_with_checkerboard_approach.py' file
 
-    # Setup core game loop
-    # Find a cordinate
-    # Take a shot
-    # Continue until all ships have been sunk
+    """
+
+
+
+    # Further improvements
 
     target_selector = MachineTargetSelector()
 
