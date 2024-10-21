@@ -5,7 +5,7 @@ from typing import Optional
 
 
 @dataclasses.dataclass
-class Cordinate():
+class Coordinate:
     x: int
     y: int
 
@@ -24,7 +24,7 @@ class BattleShips:
         [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
     ]
-    # We need this to check if the game has ended once this is zero. Game is over
+    # We need this to check if the game has ended. Once this is zero then the game is over
     __hitpoints: int = 17
 
     def __init__(self, board: Optional[list[list[int]]] = None):
@@ -37,11 +37,12 @@ class BattleShips:
             row = self.__board[x]
             col = row[y]
         except IndexError:
-            # If our machine targets cords out of range consider it a miss
+            # If our machine targets cords out of range consider it a miss. This was the quickest way to stop out of 
+            # bounds shots from breaking the game
             return False
 
         if col == 1:
-            # mark a hit on the board
+            # mark a hit on the board so that we can't double count hits
             self.__board[x][y] = "x"
             return True
 
@@ -131,17 +132,17 @@ class DirectionalShot(MachineAction):
         new_x = self._starting_cord.x + self._x_delta
         new_y = self._starting_cord.y + self._y_delta
 
-        new_cordinate = Cordinate(x=new_x, y=new_y)
+        new_Coordinate = Coordinate(x=new_x, y=new_y)
 
         hit_occurred = game.fire(x=new_x, y=new_y)
 
         if hit_occurred:
             print('Directional Shot Hit Ship -> Adding New Directional Shot')
-            return [DirectionalShot(x_delta=self._x_delta, y_delta=self._y_delta, starting_cord=new_cordinate)]
+            return [DirectionalShot(x_delta=self._x_delta, y_delta=self._y_delta, starting_cord=new_Coordinate)]
 
         # if no hit occurs we return None, here so that our machine stops making moves in this direction
         else:
-            missed_shots.append(new_cordinate)
+            missed_shots.append(new_Coordinate)
             print(
                 f'Directional Shot Missed {new_x},{new_y} {self._x_delta} {self._y_delta} {self._starting_cord}->  Returning None')
 
@@ -156,7 +157,7 @@ class RandomShot(MachineAction):
 
         # Give the bot memory to stop us from shooting the same place twice
         while new_cord_found is False:
-            cord = Cordinate(x=randint(0, 9), y=randint(0, 9))
+            cord = Coordinate(x=randint(0, 9), y=randint(0, 9))
             if cord not in missed_shots:
                 new_cord_found = True
 
@@ -208,7 +209,7 @@ def play_game(game: BattleShips) -> int:
     At this point I had about 10 mins remaining so I added memory to the random shot strategy to try and reduce the 
     count of wasted shots. This reduced the average to 102 shots, however this still failed the tests. 
     
-    In hindsight I suspect the lack of boundary detection in the DirectionalShot class might explain why the number 
+    At the time I suspect the lack of boundary detection in the DirectionalShot class might explain why the number 
     of hits was greater than the number of locations on the board!
     
     With very little time remaining I pivoted to a third approach. Replacing the random shot component with a 

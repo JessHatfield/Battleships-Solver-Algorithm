@@ -5,7 +5,7 @@ from typing import Optional
 
 
 @dataclasses.dataclass
-class Cordinate():
+class Coordinate():
     x: int
     y: int
 
@@ -133,13 +133,13 @@ class DirectionalShot(MachineAction):
         new_x = self._starting_cord.x + self._x_delta
         new_y = self._starting_cord.y + self._y_delta
 
-        new_cordinate = Cordinate(x=new_x, y=new_y)
+        new_Coordinate = Coordinate(x=new_x, y=new_y)
 
         hit_occurred = game.fire(x=new_x, y=new_y)
 
         if hit_occurred:
             print('Directional Shot Hit Ship -> Adding New Directional Shot')
-            return [DirectionalShot(x_delta=self._x_delta, y_delta=self._y_delta, starting_cord=new_cordinate)]
+            return [DirectionalShot(x_delta=self._x_delta, y_delta=self._y_delta, starting_cord=new_Coordinate)]
 
         # if no hit occurs we return None, here so that our machine stops making moves in this direction
 
@@ -178,7 +178,7 @@ class CheckerboardShotGenerator():
                 y += 2
                 x = x
 
-            grid_cords.append(Cordinate(x=x, y=y))
+            grid_cords.append(Coordinate(x=x, y=y))
 
             count += 1
 
@@ -186,12 +186,12 @@ class CheckerboardShotGenerator():
 
         return grid_cords
 
-    def get_next_cordinate(self):
+    def get_next_Coordinate(self):
         return self.grid_cords.pop(0)
 
     def execute(self,game:BattleShips,missed_shots):
 
-        new_cord = self.get_next_cordinate()
+        new_cord = self.get_next_Coordinate()
 
         hit_occurred = game.fire(x=new_cord.x, y=new_cord.y)
 
@@ -229,7 +229,7 @@ def play_game(game: BattleShips) -> int:
     # compute if game has ended and return score
 
     # Setup core game loop
-    # Find a cordinate
+    # Find a Coordinate
     # Take a shot
     # Continue until all ships have been sunk
 
