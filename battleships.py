@@ -140,9 +140,10 @@ class DirectionalShot(MachineAction):
             return [DirectionalShot(x_delta=self._x_delta, y_delta=self._y_delta, starting_cord=new_cordinate)]
 
         # if no hit occurs we return None, here so that our machine stops making moves in this direction
-
-        print(
-            f'Directional Shot Missed {new_x},{new_y} {self._x_delta} {self._y_delta} {self._starting_cord}->  Returning None')
+        else:
+            missed_shots.append(new_cordinate)
+            print(
+                f'Directional Shot Missed {new_x},{new_y} {self._x_delta} {self._y_delta} {self._starting_cord}->  Returning None')
 
         return None
 
@@ -156,7 +157,6 @@ class RandomShot(MachineAction):
         # Give the bot memory to stop us from shooting the same place twice
         while new_cord_found is False:
             cord = Cordinate(x=randint(0, 9), y=randint(0, 9))
-            print(len(missed_shots))
             if cord not in missed_shots:
                 new_cord_found = True
 
