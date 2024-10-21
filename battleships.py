@@ -215,6 +215,8 @@ def play_game(game: BattleShips) -> int:
     At this point I had about 10 mins remaining so I added memory to the random shot strategy to try and reduce the 
     count of wasted shots. This reduced the average to 102 shots, however this still failed the tests. 
     
+    At this point it would have been simpler to just hit each tile on the board sequentially! 
+    
     At the time I suspect the lack of boundary detection in the DirectionalShot class might explain why the number 
     of hits was greater than the number of locations on the board!
     
