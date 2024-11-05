@@ -1,3 +1,10 @@
+# Context
+
+This was a timed coding challenge I was asked to complete during the interview process of a series A startup.
+
+My final solution can be found in the battleships_with_extra_time.py file. Notes on my solution can be found [here](https://github.com/JessHatfield/Battleships-Solver-Algorithm/blob/0313501fcd009c525d4cbde4c69bf959380192ea/battleships.py#L199).
+
+
 # Pre-requisites
 Before starting the exercise, you should make sure you are familar with Git and able to run python3 applications.
 
