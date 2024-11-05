@@ -2,7 +2,7 @@
 Before starting the exercise, you should make sure you are familar with Git and able to run python3 applications.
 
 # Setup
-We ask you do this as a timed exercise with zoom recording you (video off is fine!) of *one hour* (unless we've discussed otherwise). At the end of the exercise, please either send your solution to emma@portialabs.ai and mounir@portialabs.ai or upload it to github as a private repo and add us to it.
+We ask you do this as a timed exercise with zoom recording you (video off is fine!) of *one hour* (unless we've discussed otherwise). At the end of the exercise, please either send your solution to us or upload it to github as a private repo and add us to it.
 
 Additionally, please include in your submission, a very brief (1 paragraph) explanation of *one* thing you think would be worth trying to make your
 algorithm even better.
